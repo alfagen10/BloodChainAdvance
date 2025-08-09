@@ -1,0 +1,539 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodChain DeFi - Decentralized Blood Donation Protocol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        'blood-red': '#DC2626',
+                        'blood-dark': '#991B1B',
+                        'chain-purple': '#8B5CF6',
+                        'chain-blue': '#3B82F6',
+                        'success-green': '#10B981',
+                        'dark-bg': '#0F0F0F',
+                        'card-bg': '#1A1A1A',
+                        'border-dark': '#2D2D2D',
+                    },
+                    animation: {
+                        'pulse-glow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'slide-up': 'slideUp 0.3s ease-out',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                    },
+                    boxShadow: {
+                        'glow-red': '0 0 20px rgba(220, 38, 38, 0.3)',
+                        'glow-purple': '0 0 20px rgba(139, 92, 246, 0.3)',
+                        'glow-blue': '0 0 20px rgba(59, 130, 246, 0.3)',
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .blockchain-grid {
+            background-image: 
+                linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px currentColor;
+        }
+    </style>
+</head>
+
+<body class="bg-dark-bg text-white font-inter overflow-x-hidden">
+    <!-- @COMPONENT: NavigationBar [sticky header with wallet connection] -->
+    <nav class="sticky top-0 z-50 bg-card-bg/95 backdrop-blur-md border-b border-border-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo and Brand -->
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blood-red to-blood-dark rounded-lg flex items-center justify-center">
+                            <i class="fas fa-cubes text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold glow-text text-blood-red">BloodChain</h1>
+                            <p class="text-xs text-gray-400">DeFi Protocol v2.0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#dashboard" class="text-gray-300 hover:text-white transition-colors">Dashboard</a>
+                    <a href="#donate" class="text-gray-300 hover:text-white transition-colors">Donate</a>
+                    <a href="#rewards" class="text-gray-300 hover:text-white transition-colors">Rewards</a>
+                    <a href="#analytics" class="text-gray-300 hover:text-white transition-colors">Analytics</a>
+                    <a href="#nft" class="text-gray-300 hover:text-white transition-colors">NFTs</a>
+                </div>
+
+                <!-- Wallet Connection -->
+                <div class="flex items-center space-x-4">
+                    <!-- Network Selector -->
+                    <div class="relative">
+                        <select class="bg-card-bg border border-border-dark rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-chain-purple">
+                            <option value="ethereum">🔷 Ethereum</option>
+                            <option value="polygon">🟣 Polygon</option>
+                            <option value="bsc">🟡 BSC</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Wallet Button -->
+                    <button class="bg-gradient-to-r from-chain-purple to-chain-blue hover:from-chain-blue hover:to-chain-purple px-6 py-2 rounded-lg font-semibold transition-all duration-300 shadow-glow-purple hover:shadow-glow-blue" data-mock="true">
+                        <i class="fas fa-wallet mr-2"></i>
+                        <span data-bind="wallet.connected ? wallet.address.slice(0,6) + '...' + wallet.address.slice(-4) : 'Connect Wallet'">Connect Wallet</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: NavigationBar -->
+
+    <!-- @COMPONENT: MainDashboard [primary dashboard with metrics and charts] -->
+    <main class="min-h-screen blockchain-grid">
+        <!-- Hero Section with Stats -->
+        <section class="relative py-20 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-blood-red/20 via-transparent to-chain-purple/20"></div>
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                    <!-- Total Donations -->
+                    <div class="bg-card-bg/80 backdrop-blur-sm border border-border-dark rounded-xl p-6 shadow-glow-red hover:shadow-glow-red/50 transition-all duration-300">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-400 text-sm font-medium">Total Donations</p>
+                                <p class="text-3xl font-bold text-white mt-2" data-bind="stats.totalDonations">2,847</p>
+                                <p class="text-success-green text-sm mt-1">
+                                    <i class="fas fa-arrow-up mr-1"></i>
+                                    12.5% from last month
+                                </p>
+                            </div>
+                            <div class="w-12 h-12 bg-blood-red/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-tint text-blood-red text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Active Donors -->
+                    <div class="bg-card-bg/80 backdrop-blur-sm border border-border-dark rounded-xl p-6 shadow-glow-purple hover:shadow-glow-purple/50 transition-all duration-300">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-400 text-sm font-medium">Active Donors</p>
+                                <p class="text-3xl font-bold text-white mt-2" data-bind="stats.activeDonors">1,429</p>
+                                <p class="text-success-green text-sm mt-1">
+                                    <i class="fas fa-arrow-up mr-1"></i>
+                                    8.2% from last month
+                                </p>
+                            </div>
+                            <div class="w-12 h-12 bg-chain-purple/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-users text-chain-purple text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Token Rewards -->
+                    <div class="bg-card-bg/80 backdrop-blur-sm border border-border-dark rounded-xl p-6 shadow-glow-blue hover:shadow-glow-blue/50 transition-all duration-300">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-400 text-sm font-medium">BLOOD Tokens</p>
+                                <p class="text-3xl font-bold text-white mt-2" data-bind="stats.tokenRewards">425,892</p>
+                                <p class="text-success-green text-sm mt-1">
+                                    <i class="fas fa-arrow-up mr-1"></i>
+                                    24.1% from last month
+                                </p>
+                            </div>
+                            <div class="w-12 h-12 bg-chain-blue/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-coins text-chain-blue text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NFT Certificates -->
+                    <div class="bg-card-bg/80 backdrop-blur-sm border border-border-dark rounded-xl p-6 shadow-glow-red hover:shadow-glow-red/50 transition-all duration-300">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-400 text-sm font-medium">NFT Certificates</p>
+                                <p class="text-3xl font-bold text-white mt-2" data-bind="stats.nftCertificates">1,205</p>
+                                <p class="text-success-green text-sm mt-1">
+                                    <i class="fas fa-arrow-up mr-1"></i>
+                                    18.7% from last month
+                                </p>
+                            </div>
+                            <div class="w-12 h-12 bg-blood-red/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-certificate text-blood-red text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Action Cards -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+                    <!-- Donation Interface -->
+                    <div class="bg-card-bg/90 backdrop-blur-sm border border-border-dark rounded-2xl p-8 shadow-xl">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold text-white">Record Donation</h2>
+                            <div class="w-12 h-12 bg-gradient-to-br from-blood-red to-blood-dark rounded-lg flex items-center justify-center">
+                                <i class="fas fa-plus text-white text-xl"></i>
+                            </div>
+                        </div>
+
+                        <form class="space-y-6" data-implementation="Connect to smart contract for donation recording">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-2">Blood Type</label>
+                                    <select class="w-full bg-dark-bg border border-border-dark rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blood-red transition-all">
+                                        <option value="">Select Blood Type</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-2">Quantity (Units)</label>
+                                    <input type="number" placeholder="1" min="1" class="w-full bg-dark-bg border border-border-dark rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blood-red transition-all">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Hospital/Collection Center</label>
+                                <input type="text" placeholder="Enter hospital name" class="w-full bg-dark-bg border border-border-dark rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blood-red transition-all">
+                            </div>
+
+                            <div class="bg-dark-bg border border-border-dark rounded-lg p-4">
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-400">Gas Fee:</span>
+                                    <span class="text-white font-semibold" data-bind="gasEstimate">~0.005 ETH</span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm mt-1">
+                                    <span class="text-gray-400">Reward Tokens:</span>
+                                    <span class="text-success-green font-semibold">+100 BLOOD</span>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="w-full bg-gradient-to-r from-blood-red to-blood-dark hover:from-blood-dark hover:to-blood-red py-4 rounded-lg font-semibold text-white transition-all duration-300 shadow-glow-red hover:shadow-glow-red/70" data-event="click:handleDonationSubmit">
+                                <i class="fas fa-tint mr-2"></i>
+                                Record Donation on Blockchain
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- ML Shortage Predictor -->
+                    <div class="bg-card-bg/90 backdrop-blur-sm border border-border-dark rounded-2xl p-8 shadow-xl">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold text-white">AI Shortage Predictor</h2>
+                            <div class="w-12 h-12 bg-gradient-to-br from-chain-purple to-chain-blue rounded-lg flex items-center justify-center">
+                                <i class="fas fa-brain text-white text-xl"></i>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- Location Input -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Location</label>
+                                <input type="text" placeholder="Enter city or region" class="w-full bg-dark-bg border border-border-dark rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-chain-purple transition-all">
+                            </div>
+
+                            <!-- Blood Type Predictions -->
+                            <div class="space-y-3">
+                                <!-- @MAP: bloodTypes.map(type => ( -->
+                                <div class="flex items-center justify-between p-3 bg-dark-bg rounded-lg border border-border-dark">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="font-semibold text-white">O+</span>
+                                        <div class="w-20 bg-gray-700 rounded-full h-2">
+                                            <div class="bg-success-green h-2 rounded-full" style="width: 75%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-success-green text-sm font-semibold">75% Available</span>
+                                </div>
+
+                                <div class="flex items-center justify-between p-3 bg-dark-bg rounded-lg border border-border-dark">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="font-semibold text-white">A+</span>
+                                        <div class="w-20 bg-gray-700 rounded-full h-2">
+                                            <div class="bg-yellow-500 h-2 rounded-full" style="width: 45%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-yellow-500 text-sm font-semibold">45% Available</span>
+                                </div>
+
+                                <div class="flex items-center justify-between p-3 bg-dark-bg rounded-lg border border-border-dark">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="font-semibold text-white">AB-</span>
+                                        <div class="w-20 bg-gray-700 rounded-full h-2">
+                                            <div class="bg-red-500 h-2 rounded-full" style="width: 15%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-red-500 text-sm font-semibold">15% Critical</span>
+                                </div>
+                                <!-- @END_MAP )) -->
+                            </div>
+
+                            <button class="w-full bg-gradient-to-r from-chain-purple to-chain-blue hover:from-chain-blue hover:to-chain-purple py-3 rounded-lg font-semibold text-white transition-all duration-300 shadow-glow-purple" data-event="click:runMLPrediction">
+                                <i class="fas fa-chart-line mr-2"></i>
+                                Run AI Analysis
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions & NFT Gallery -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Recent Transactions -->
+                    <div class="lg:col-span-2 bg-card-bg/90 backdrop-blur-sm border border-border-dark rounded-2xl p-8 shadow-xl">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold text-white">Recent Transactions</h2>
+                            <button class="text-chain-blue hover:text-chain-purple transition-colors">
+                                View All <i class="fas fa-external-link-alt ml-1"></i>
+                            </button>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- @MAP: transactions.map(tx => ( -->
+                            <div class="flex items-center justify-between p-4 bg-dark-bg/50 rounded-lg border border-border-dark hover:border-blood-red transition-colors">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-10 h-10 bg-success-green/20 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-tint text-success-green"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-white" data-mock="true">Donation Recorded</p>
+                                        <p class="text-sm text-gray-400" data-mock="true">O+ • 2 Units • General Hospital</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-semibold text-success-green" data-mock="true">+200 BLOOD</p>
+                                    <p class="text-xs text-gray-400" data-mock="true">2 mins ago</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-dark-bg/50 rounded-lg border border-border-dark hover:border-blood-red transition-colors">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-10 h-10 bg-chain-purple/20 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-certificate text-chain-purple"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-white" data-mock="true">NFT Certificate Minted</p>
+                                        <p class="text-sm text-gray-400" data-mock="true">Blood Hero #1429</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-semibold text-chain-purple" data-mock="true">NFT #1429</p>
+                                    <p class="text-xs text-gray-400" data-mock="true">5 mins ago</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-dark-bg/50 rounded-lg border border-border-dark hover:border-blood-red transition-colors">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-10 h-10 bg-chain-blue/20 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-exchange-alt text-chain-blue"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-white" data-mock="true">Tokens Staked</p>
+                                        <p class="text-sm text-gray-400" data-mock="true">500 BLOOD → Liquidity Pool</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-semibold text-chain-blue" data-mock="true">+5% APY</p>
+                                    <p class="text-xs text-gray-400" data-mock="true">12 mins ago</p>
+                                </div>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </div>
+
+                    <!-- NFT Gallery -->
+                    <div class="bg-card-bg/90 backdrop-blur-sm border border-border-dark rounded-2xl p-8 shadow-xl">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-bold text-white">Your NFTs</h2>
+                            <button class="text-chain-blue hover:text-chain-purple transition-colors">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- Dynamic background showing a heroic blood donor certificate -->
+                            <div class="bg-gradient-to-br from-blood-red/20 via-chain-purple/20 to-chain-blue/20 rounded-xl p-4 border border-border-dark">
+                                <div class="aspect-square bg-dark-bg/50 rounded-lg mb-3 flex items-center justify-center">
+                                    <i class="fas fa-medal text-4xl text-blood-red"></i>
+                                </div>
+                                <h3 class="font-semibold text-white text-sm" data-mock="true">Blood Hero #1429</h3>
+                                <p class="text-xs text-gray-400" data-mock="true">Legendary Donor</p>
+                            </div>
+
+                            <!-- Certificate showing blood donation achievement with medical symbols -->
+                            <div class="bg-gradient-to-br from-success-green/20 via-chain-blue/20 to-chain-purple/20 rounded-xl p-4 border border-border-dark">
+                                <div class="aspect-square bg-dark-bg/50 rounded-lg mb-3 flex items-center justify-center">
+                                    <i class="fas fa-heartbeat text-4xl text-success-green"></i>
+                                </div>
+                                <h3 class="font-semibold text-white text-sm" data-mock="true">Life Saver #892</h3>
+                                <p class="text-xs text-gray-400" data-mock="true">50+ Donations</p>
+                            </div>
+
+                            <!-- Commemorative certificate showing community impact metrics -->
+                            <div class="bg-gradient-to-br from-chain-blue/20 via-chain-purple/20 to-blood-red/20 rounded-xl p-4 border border-border-dark">
+                                <div class="aspect-square bg-dark-bg/50 rounded-lg mb-3 flex items-center justify-center">
+                                    <i class="fas fa-trophy text-4xl text-chain-blue"></i>
+                                </div>
+                                <h3 class="font-semibold text-white text-sm" data-mock="true">Champion #156</h3>
+                                <p class="text-xs text-gray-400" data-mock="true">Top 1% Donor</p>
+                            </div>
+
+                            <button class="w-full bg-gradient-to-r from-chain-purple to-chain-blue hover:from-chain-blue hover:to-chain-purple py-3 rounded-lg font-semibold text-white transition-all duration-300 text-sm" data-event="click:mintNewNFT">
+                                <i class="fas fa-plus mr-2"></i>
+                                Mint New NFT
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- @END_COMPONENT: MainDashboard -->
+
+    <!-- @COMPONENT: WalletModal [Web3 wallet connection modal] -->
+    <div id="walletModal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden items-center justify-center" data-implementation="Show/hide based on wallet connection state">
+        <div class="bg-card-bg border border-border-dark rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-white">Connect Wallet</h2>
+                <button class="text-gray-400 hover:text-white" data-event="click:closeWalletModal">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <button class="w-full bg-dark-bg border border-border-dark rounded-lg p-4 hover:border-chain-purple transition-colors group" data-event="click:connectMetaMask">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <i class="fab fa-ethereum text-white text-xl"></i>
+                        </div>
+                        <div class="text-left">
+                            <p class="font-semibold text-white group-hover:text-chain-purple transition-colors">MetaMask</p>
+                            <p class="text-sm text-gray-400">Connect using browser wallet</p>
+                        </div>
+                    </div>
+                </button>
+
+                <button class="w-full bg-dark-bg border border-border-dark rounded-lg p-4 hover:border-chain-purple transition-colors group" data-event="click:connectWalletConnect">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-qrcode text-white text-xl"></i>
+                        </div>
+                        <div class="text-left">
+                            <p class="font-semibold text-white group-hover:text-chain-purple transition-colors">WalletConnect</p>
+                            <p class="text-sm text-gray-400">Scan with mobile wallet</p>
+                        </div>
+                    </div>
+                </button>
+
+                <button class="w-full bg-dark-bg border border-border-dark rounded-lg p-4 hover:border-chain-purple transition-colors group" data-event="click:connectCoinbase">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-wallet text-white text-xl"></i>
+                        </div>
+                        <div class="text-left">
+                            <p class="font-semibold text-white group-hover:text-chain-purple transition-colors">Coinbase Wallet</p>
+                            <p class="text-sm text-gray-400">Connect with Coinbase</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
+
+            <div class="mt-6 p-4 bg-dark-bg rounded-lg border border-border-dark">
+                <p class="text-xs text-gray-400 text-center">
+                    By connecting your wallet, you agree to our Terms of Service and Privacy Policy
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: WalletModal -->
+
+    <script>
+        (function() {
+            // TODO: Implement Web3 wallet connection logic
+            // TODO: Implement smart contract interaction
+            // TODO: Implement real-time blockchain data fetching
+            // TODO: Implement NFT minting functionality
+            // TODO: Implement ML prediction API calls
+            
+            // Modal functionality
+            const walletModal = document.getElementById('walletModal');
+            const connectWalletBtn = document.querySelector('[data-bind*="wallet"]');
+            
+            if (connectWalletBtn) {
+                connectWalletBtn.addEventListener('click', () => {
+                    walletModal.classList.remove('hidden');
+                    walletModal.classList.add('flex');
+                });
+            }
+
+            // Close modal functionality
+            document.addEventListener('click', (e) => {
+                if (e.target.matches('[data-event*="closeWalletModal"]') || 
+                    (e.target === walletModal)) {
+                    walletModal.classList.add('hidden');
+                    walletModal.classList.remove('flex');
+                }
+            });
+
+            // Simulated real-time updates
+            function updateStats() {
+                const statsElements = document.querySelectorAll('[data-bind*="stats"]');
+                // TODO: Replace with actual blockchain data
+                console.log('Updating stats from blockchain...');
+            }
+
+            // Update stats every 30 seconds
+            setInterval(updateStats, 30000);
+
+            // Form validation and submission
+            document.addEventListener('submit', (e) => {
+                if (e.target.matches('form')) {
+                    e.preventDefault();
+                    // TODO: Implement smart contract interaction for donation recording
+                    console.log('Submitting to smart contract...');
+                }
+            });
+
+            // Add entrance animations
+            const cards = document.querySelectorAll('.bg-card-bg');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fade-in 0.6s ease-out forwards';
+                    }
+                });
+            });
+
+            cards.forEach(card => observer.observe(card));
+        })();
+    </script>
+</body>
+</html>

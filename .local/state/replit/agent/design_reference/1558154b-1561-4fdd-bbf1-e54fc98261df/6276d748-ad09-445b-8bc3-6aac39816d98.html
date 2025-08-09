@@ -1,0 +1,707 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodChain DeFi - Advanced Blockchain Blood Donation Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#0B1426',
+                        'secondary': '#1A1B23',
+                        'accent': '#00D4FF',
+                        'gold': '#FFD700',
+                        'neon': '#39FF14',
+                        'glass': 'rgba(255, 255, 255, 0.1)',
+                    },
+                    animation: {
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-neon': 'pulse-neon 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    fontFamily: {
+                        'mono': ['Roboto Mono', 'monospace'],
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0B1426 0%, #1A1B23 50%, #0B1426 100%);
+            background-attachment: fixed;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px #00D4FF; }
+            to { box-shadow: 0 0 30px #00D4FF, 0 0 40px #00D4FF; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse-neon {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #00D4FF, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .neon-border {
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, #00D4FF, #39FF14) border-box;
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+        }
+        
+        .particle {
+            position: absolute;
+            background: #00D4FF;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .blockchain-grid {
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-white blockchain-grid">
+    <!-- Floating Particles -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="particle w-2 h-2 top-10 left-10" style="animation-delay: 0s;"></div>
+        <div class="particle w-1 h-1 top-20 right-20" style="animation-delay: 1s;"></div>
+        <div class="particle w-3 h-3 bottom-20 left-20" style="animation-delay: 2s;"></div>
+        <div class="particle w-1 h-1 top-1/2 right-10" style="animation-delay: 3s;"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="glass-card border-b border-accent/30 sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-accent to-neon rounded-xl flex items-center justify-center">
+                        <i class="fas fa-cube text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold gradient-text">BloodChain DeFi</h1>
+                        <p class="text-sm text-gray-400">Advanced Blockchain Blood Donation Platform</p>
+                    </div>
+                </div>
+                
+                <!-- Wallet Connection -->
+                <div class="flex items-center space-x-4">
+                    <div class="glass-card px-4 py-2 rounded-lg">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-neon rounded-full animate-pulse-neon"></div>
+                            <span class="text-sm font-mono">Polygon Mumbai</span>
+                        </div>
+                    </div>
+                    <button class="bg-gradient-to-r from-accent to-neon px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-accent/50 transition-all duration-300 animate-glow">
+                        <i class="fas fa-wallet mr-2"></i>
+                        Connect Wallet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+        <!-- Dashboard Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="glass-card p-6 rounded-2xl hover:scale-105 transition-transform duration-300">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-accent to-blue-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-coins text-xl"></i>
+                    </div>
+                    <span class="text-neon text-2xl font-bold">1,247</span>
+                </div>
+                <h3 class="text-lg font-semibold text-white">BLOOD Tokens</h3>
+                <p class="text-gray-400 text-sm">≈ $2,494.00 USD</p>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl hover:scale-105 transition-transform duration-300">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-gold to-yellow-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-certificate text-xl"></i>
+                    </div>
+                    <span class="text-gold text-2xl font-bold">23</span>
+                </div>
+                <h3 class="text-lg font-semibold text-white">NFT Certificates</h3>
+                <p class="text-gray-400 text-sm">Donation Verified</p>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl hover:scale-105 transition-transform duration-300">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-tint text-xl"></i>
+                    </div>
+                    <span class="text-red-400 text-2xl font-bold">156</span>
+                </div>
+                <h3 class="text-lg font-semibold text-white">Total Donations</h3>
+                <p class="text-gray-400 text-sm">Units Contributed</p>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl hover:scale-105 transition-transform duration-300">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-neon to-green-400 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-chart-line text-xl"></i>
+                    </div>
+                    <span class="text-neon text-2xl font-bold">92%</span>
+                </div>
+                <h3 class="text-lg font-semibold text-white">Network Health</h3>
+                <p class="text-gray-400 text-sm">Blockchain Status</p>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Real-time Blockchain Activity -->
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-bold gradient-text">Real-time Blockchain Activity</h2>
+                        <div class="flex space-x-2">
+                            <div class="w-3 h-3 bg-neon rounded-full animate-pulse"></div>
+                            <span class="text-sm text-gray-400">Live</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Blockchain visualization showing medical data on chain -->
+                    <div class="mb-6">
+                        <!-- Stylized visualization of blockchain technology in healthcare -->
+                        <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=400" alt="Blockchain technology visualization with medical data" class="w-full h-48 object-cover rounded-xl opacity-80" />
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-secondary/50 rounded-xl border border-accent/20">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-8 h-8 bg-neon rounded-full flex items-center justify-center">
+                                    <i class="fas fa-cube text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">Block #2,847,392</p>
+                                    <p class="text-sm text-gray-400 font-mono">0x7a8b9c...def456</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-neon font-bold">+5 BLOOD</p>
+                                <p class="text-xs text-gray-400">2 mins ago</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 bg-secondary/50 rounded-xl border border-gold/20">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-8 h-8 bg-gold rounded-full flex items-center justify-center">
+                                    <i class="fas fa-certificate text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">NFT Certificate Minted</p>
+                                    <p class="text-sm text-gray-400 font-mono">TokenID: #8764</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-gold font-bold">A+ Type</p>
+                                <p class="text-xs text-gray-400">5 mins ago</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 bg-secondary/50 rounded-xl border border-red-400/20">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-8 h-8 bg-red-400 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-tint text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">Emergency Request</p>
+                                    <p class="text-sm text-gray-400">San Francisco General Hospital</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-red-400 font-bold">O- Urgent</p>
+                                <p class="text-xs text-gray-400">8 mins ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smart Contract Interface -->
+                <div class="glass-card p-6 rounded-2xl">
+                    <h2 class="text-2xl font-bold gradient-text mb-6">Smart Contract Interface</h2>
+                    
+                    <!-- Medical blockchain interface dashboard -->
+                    <div class="mb-6">
+                        <img src="https://pixabay.com/get/gef739b9c1cbac59fe3075c928beff8513b3550b8b2b8a07752c797d3a625565aab780f740ed86ffc436a15fa9f54ca1e7c3a35e7e59ed1b23f6b3f639a3efd75_1280.jpg" alt="Advanced medical blockchain interface dashboard" class="w-full h-32 object-cover rounded-xl opacity-70" />
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold text-accent">Donation Registration</h3>
+                            <div class="space-y-3">
+                                <input type="text" placeholder="Donor Address" class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white font-mono text-sm focus:border-accent focus:outline-none transition-colors" />
+                                <select class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none transition-colors">
+                                    <option>Blood Type</option>
+                                    <option>A+</option>
+                                    <option>A-</option>
+                                    <option>B+</option>
+                                    <option>B-</option>
+                                    <option>AB+</option>
+                                    <option>AB-</option>
+                                    <option>O+</option>
+                                    <option>O-</option>
+                                </select>
+                                <input type="number" placeholder="Units (ml)" class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none transition-colors" />
+                                <button class="w-full bg-gradient-to-r from-accent to-neon px-6 py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-accent/50 transition-all duration-300">
+                                    <i class="fas fa-plus mr-2"></i>
+                                    Register Donation
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold text-gold">Reward Claims</h3>
+                            <div class="space-y-3">
+                                <div class="bg-secondary/50 p-4 rounded-lg border border-gold/20">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-sm text-gray-400">Available Rewards</span>
+                                        <span class="text-gold font-bold">847 BLOOD</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm text-gray-400">Gas Estimate</span>
+                                        <span class="text-accent font-mono text-sm">~0.003 MATIC</span>
+                                    </div>
+                                </div>
+                                <button class="w-full bg-gradient-to-r from-gold to-yellow-500 px-6 py-3 rounded-lg font-semibold text-black hover:shadow-lg hover:shadow-gold/50 transition-all duration-300">
+                                    <i class="fas fa-gift mr-2"></i>
+                                    Claim Rewards
+                                </button>
+                                <button class="w-full border border-accent text-accent px-6 py-3 rounded-lg font-semibold hover:bg-accent hover:text-black transition-all duration-300">
+                                    <i class="fas fa-chart-line mr-2"></i>
+                                    View Token Economics
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ML Shortage Prediction -->
+                <div class="glass-card p-6 rounded-2xl">
+                    <h2 class="text-2xl font-bold gradient-text mb-6">AI Shortage Prediction</h2>
+                    
+                    <!-- Medical AI prediction visualization -->
+                    <div class="mb-6">
+                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=300" alt="AI medical data analysis and prediction dashboard" class="w-full h-32 object-cover rounded-xl opacity-70" />
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="text-center p-4 bg-secondary/50 rounded-xl border border-red-400/20">
+                            <div class="text-2xl font-bold text-red-400">O-</div>
+                            <div class="text-sm text-gray-400 mb-2">Critical</div>
+                            <div class="w-full bg-gray-700 rounded-full h-2">
+                                <div class="bg-red-400 h-2 rounded-full" style="width: 85%"></div>
+                            </div>
+                            <div class="text-xs text-red-400 mt-1">85% shortage risk</div>
+                        </div>
+
+                        <div class="text-center p-4 bg-secondary/50 rounded-xl border border-yellow-400/20">
+                            <div class="text-2xl font-bold text-yellow-400">A+</div>
+                            <div class="text-sm text-gray-400 mb-2">Warning</div>
+                            <div class="w-full bg-gray-700 rounded-full h-2">
+                                <div class="bg-yellow-400 h-2 rounded-full" style="width: 65%"></div>
+                            </div>
+                            <div class="text-xs text-yellow-400 mt-1">65% shortage risk</div>
+                        </div>
+
+                        <div class="text-center p-4 bg-secondary/50 rounded-xl border border-neon/20">
+                            <div class="text-2xl font-bold text-neon">B+</div>
+                            <div class="text-sm text-gray-400 mb-2">Stable</div>
+                            <div class="w-full bg-gray-700 rounded-full h-2">
+                                <div class="bg-neon h-2 rounded-full" style="width: 35%"></div>
+                            </div>
+                            <div class="text-xs text-neon mt-1">35% shortage risk</div>
+                        </div>
+
+                        <div class="text-center p-4 bg-secondary/50 rounded-xl border border-green-400/20">
+                            <div class="text-2xl font-bold text-green-400">AB-</div>
+                            <div class="text-sm text-gray-400 mb-2">Surplus</div>
+                            <div class="w-full bg-gray-700 rounded-full h-2">
+                                <div class="bg-green-400 h-2 rounded-full" style="width: 15%"></div>
+                            </div>
+                            <div class="text-xs text-green-400 mt-1">15% shortage risk</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 p-4 bg-accent/10 border border-accent/20 rounded-xl">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <i class="fas fa-brain text-accent"></i>
+                            <span class="font-semibold text-accent">ML Model Insights</span>
+                        </div>
+                        <p class="text-sm text-gray-300">Based on blockchain data analysis, there's a 85% probability of O- blood shortage in the next 72 hours in San Francisco region. Immediate action recommended.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="space-y-8">
+                <!-- NFT Certificate Gallery -->
+                <div class="glass-card p-6 rounded-2xl">
+                    <h2 class="text-xl font-bold gradient-text mb-6">NFT Certificate Gallery</h2>
+                    
+                    <!-- NFT certificates display showcasing verified donations -->
+                    <div class="mb-4">
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=300" alt="Digital NFT certificates display for medical verification" class="w-full h-32 object-cover rounded-xl opacity-80" />
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="neon-border p-4 rounded-xl bg-secondary/30">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-gold font-bold">#8764</span>
+                                <span class="text-xs bg-gold text-black px-2 py-1 rounded-full">VERIFIED</span>
+                            </div>
+                            <!-- NFT artwork showing donation certificate -->
+                            <img src="https://pixabay.com/get/g5a63a4669eb49e5f907922d3c955623e73fe6f9ebaf95e861ce9cbe24b542a20c2ae8851cde83e7b0f0b1600ea3ade0e7ee9766363f21bd1283e4c1a24559040_1280.jpg" alt="NFT certificate artwork for blood donation" class="w-full h-24 object-cover rounded-lg mb-3" />
+                            <div class="text-sm space-y-1">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Type:</span>
+                                    <span class="text-white">A+</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Date:</span>
+                                    <span class="text-white">Dec 15, 2024</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Location:</span>
+                                    <span class="text-white">SF General</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="neon-border p-4 rounded-xl bg-secondary/30">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-gold font-bold">#8721</span>
+                                <span class="text-xs bg-gold text-black px-2 py-1 rounded-full">VERIFIED</span>
+                            </div>
+                            <!-- NFT artwork showing donation certificate -->
+                            <img src="https://pixabay.com/get/g5a63a4669eb49e5f907922d3c955623e73fe6f9ebaf95e861ce9cbe24b542a20c2ae8851cde83e7b0f0b1600ea3ade0e7ee9766363f21bd1283e4c1a24559040_1280.jpg" alt="Digital certificate NFT for verified blood donation" class="w-full h-24 object-cover rounded-lg mb-3" />
+                            <div class="text-sm space-y-1">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Type:</span>
+                                    <span class="text-white">O-</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Date:</span>
+                                    <span class="text-white">Dec 12, 2024</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Location:</span>
+                                    <span class="text-white">UCLA Medical</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="w-full border border-accent text-accent px-4 py-3 rounded-lg font-semibold hover:bg-accent hover:text-black transition-all duration-300">
+                            <i class="fas fa-plus mr-2"></i>
+                            Mint New Certificate
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Multi-Chain Support -->
+                <div class="glass-card p-6 rounded-2xl">
+                    <h2 class="text-xl font-bold gradient-text mb-6">Multi-Chain Support</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-secondary/50 rounded-xl border border-purple-400/20">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-purple-400 rounded-full flex items-center justify-center">
+                                    <i class="fab fa-ethereum text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">Ethereum Sepolia</p>
+                                    <p class="text-xs text-gray-400">Testnet</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-neon text-sm">●</p>
+                                <p class="text-xs text-gray-400">Active</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 bg-secondary/50 rounded-xl border border-accent/20">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-accent rounded-full flex items-center justify-center">
+                                    <i class="fas fa-cube text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">Polygon Mumbai</p>
+                                    <p class="text-xs text-gray-400">Primary</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-neon text-sm">●</p>
+                                <p class="text-xs text-gray-400">Connected</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 bg-secondary/50 rounded-xl border border-gray-600/20">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-link text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">Arbitrum Goerli</p>
+                                    <p class="text-xs text-gray-400">L2 Solution</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-gray-400 text-sm">○</p>
+                                <p class="text-xs text-gray-400">Inactive</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="w-full mt-4 bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300">
+                        <i class="fas fa-network-wired mr-2"></i>
+                        Deploy New Chain
+                    </button>
+                </div>
+
+                <!-- IPFS Storage -->
+                <div class="glass-card p-6 rounded-2xl">
+                    <h2 class="text-xl font-bold gradient-text mb-6">IPFS Storage</h2>
+                    
+                    <!-- Decentralized blockchain storage visualization -->
+                    <div class="mb-4">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=200" alt="Distributed blockchain storage network visualization" class="w-full h-24 object-cover rounded-xl opacity-70" />
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-secondary/50 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-file-medical text-accent"></i>
+                                <div>
+                                    <p class="text-sm font-semibold">Medical Records</p>
+                                    <p class="text-xs text-gray-400 font-mono">QmX...7dF2</p>
+                                </div>
+                            </div>
+                            <span class="text-neon text-xs">2.3 MB</span>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-secondary/50 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-certificate text-gold"></i>
+                                <div>
+                                    <p class="text-sm font-semibold">NFT Metadata</p>
+                                    <p class="text-xs text-gray-400 font-mono">QmY...9eA4</p>
+                                </div>
+                            </div>
+                            <span class="text-neon text-xs">156 KB</span>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-secondary/50 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-qrcode text-purple-400"></i>
+                                <div>
+                                    <p class="text-sm font-semibold">QR Verification</p>
+                                    <p class="text-xs text-gray-400 font-mono">QmZ...1bC8</p>
+                                </div>
+                            </div>
+                            <span class="text-neon text-xs">89 KB</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 p-3 bg-neon/10 border border-neon/20 rounded-lg">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <i class="fas fa-shield-alt text-neon"></i>
+                            <span class="text-sm font-semibold text-neon">Decentralized Storage</span>
+                        </div>
+                        <p class="text-xs text-gray-300">All sensitive data encrypted and distributed across IPFS network for maximum security and availability.</p>
+                    </div>
+                </div>
+
+                <!-- Transaction History -->
+                <div class="glass-card p-6 rounded-2xl">
+                    <h2 class="text-xl font-bold gradient-text mb-6">Recent Transactions</h2>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-secondary/50 rounded-lg border-l-4 border-neon">
+                            <div>
+                                <p class="text-sm font-semibold">Token Reward</p>
+                                <p class="text-xs text-gray-400 font-mono">0xa8b9...c3d4</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-neon font-bold">+50 BLOOD</p>
+                                <p class="text-xs text-gray-400">2 mins ago</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-secondary/50 rounded-lg border-l-4 border-gold">
+                            <div>
+                                <p class="text-sm font-semibold">NFT Mint</p>
+                                <p class="text-xs text-gray-400 font-mono">0x7f6e...2a1b</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-gold font-bold">Certificate #8764</p>
+                                <p class="text-xs text-gray-400">15 mins ago</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-secondary/50 rounded-lg border-l-4 border-red-400">
+                            <div>
+                                <p class="text-sm font-semibold">Donation Logged</p>
+                                <p class="text-xs text-gray-400 font-mono">0x5c3d...9e8f</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-red-400 font-bold">450ml A+</p>
+                                <p class="text-xs text-gray-400">1 hour ago</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="w-full mt-4 border border-gray-600 text-gray-300 px-4 py-3 rounded-lg font-semibold hover:border-accent hover:text-accent transition-all duration-300">
+                        <i class="fas fa-external-link-alt mr-2"></i>
+                        View on Block Explorer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-card border-t border-accent/30 mt-16">
+        <div class="container mx-auto px-6 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold gradient-text mb-4">BloodChain DeFi</h3>
+                    <p class="text-gray-400 text-sm">Revolutionizing healthcare through blockchain technology and decentralized blood donation management.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-3">Smart Contracts</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-accent transition-colors">Donation Registry</a></li>
+                        <li><a href="#" class="hover:text-accent transition-colors">BLOOD Token</a></li>
+                        <li><a href="#" class="hover:text-accent transition-colors">NFT Certificates</a></li>
+                        <li><a href="#" class="hover:text-accent transition-colors">Governance</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-3">Network</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-accent transition-colors">Polygon Mumbai</a></li>
+                        <li><a href="#" class="hover:text-accent transition-colors">Ethereum Sepolia</a></li>
+                        <li><a href="#" class="hover:text-accent transition-colors">IPFS Gateway</a></li>
+                        <li><a href="#" class="hover:text-accent transition-colors">Oracle Network</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-3">Resources</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-accent transition-colors">Whitepaper</a></li>
+                        <li><a href="#" class="hover:text-accent transition-colors">API Docs</a></li>
+                        <li><a href="#" class="hover:text-accent transition-colors">Security Audit</a></li>
+                        <li><a href="#" class="hover:text-accent transition-colors">Bug Bounty</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center">
+                <p class="text-gray-400 text-sm">© 2024 BloodChain DeFi. Powered by blockchain technology for a healthier future.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // TODO: Implement Web3 wallet connection logic
+        // TODO: Add smart contract interaction functionality
+        // TODO: Implement real-time blockchain event listening
+        // TODO: Add NFT minting and metadata handling
+        // TODO: Integrate IPFS for decentralized storage
+        // TODO: Add comprehensive error handling and loading states
+        
+        (function() {
+            // Simple animations and interactions
+            document.addEventListener('DOMContentLoaded', function() {
+                // Animate cards on scroll
+                const cards = document.querySelectorAll('.glass-card');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.animation = 'fadeIn 0.6s ease forwards';
+                        }
+                    });
+                });
+                
+                cards.forEach(card => {
+                    observer.observe(card);
+                });
+
+                // Simulate real-time updates
+                setInterval(() => {
+                    const liveIndicators = document.querySelectorAll('.animate-pulse');
+                    liveIndicators.forEach(indicator => {
+                        indicator.style.opacity = indicator.style.opacity === '0.5' ? '1' : '0.5';
+                    });
+                }, 1000);
+
+                // Add floating animation to particles
+                const particles = document.querySelectorAll('.particle');
+                particles.forEach((particle, index) => {
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.animationDelay = (index * 0.5) + 's';
+                });
+            });
+
+            // Wallet connection simulation
+            function connectWallet() {
+                // TODO: Implement actual MetaMask connection
+                console.log('Connecting to MetaMask...');
+            }
+
+            // Smart contract interaction simulation
+            function registerDonation() {
+                // TODO: Implement smart contract interaction
+                console.log('Registering donation on blockchain...');
+            }
+
+            // NFT minting simulation
+            function mintCertificate() {
+                // TODO: Implement NFT minting with metadata
+                console.log('Minting NFT certificate...');
+            }
+
+            // Make functions globally available
+            window.connectWallet = connectWallet;
+            window.registerDonation = registerDonation;
+            window.mintCertificate = mintCertificate;
+        })();
+    </script>
+
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</body>
+</html>
