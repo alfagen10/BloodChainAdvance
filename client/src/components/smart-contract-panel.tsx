@@ -122,7 +122,8 @@ export function SmartContractPanel() {
                   min="1"
                   value={donationForm.quantity}
                   onChange={(e) => setDonationForm(prev => ({ ...prev, quantity: parseInt(e.target.value) || 1 }))}
-                  className="bg-secondary/50 border-white/10 text-white focus:border-accent"
+                  placeholder="1"
+                  className="bg-secondary/50 border-white/20 text-white placeholder:text-gray-400 focus:border-accent"
                 />
               </div>
               
@@ -133,7 +134,7 @@ export function SmartContractPanel() {
                   value={donationForm.hospital}
                   onChange={(e) => setDonationForm(prev => ({ ...prev, hospital: e.target.value }))}
                   placeholder="General Hospital"
-                  className="bg-secondary/50 border-white/10 text-white focus:border-accent"
+                  className="bg-secondary/50 border-white/20 text-white placeholder:text-gray-400 focus:border-accent"
                 />
               </div>
               

@@ -8,6 +8,8 @@ import Dashboard from "@/pages/dashboard";
 import Analytics from "@/pages/analytics";
 import NFTCertificates from "@/pages/nft-certificates";
 import SmartContracts from "@/pages/smart-contracts";
+import DonorRegistration from "@/pages/donor-registration";
+import HospitalDashboard from "@/pages/hospital-dashboard";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -17,6 +19,8 @@ function Router() {
       <Route path="/analytics" component={Analytics} />
       <Route path="/nft-certificates" component={NFTCertificates} />
       <Route path="/smart-contracts" component={SmartContracts} />
+      <Route path="/donor-registration" component={DonorRegistration} />
+      <Route path="/hospital-dashboard" component={HospitalDashboard} />
       <Route component={NotFound} />
     </Switch>
   );

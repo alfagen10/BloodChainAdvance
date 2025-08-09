@@ -6,6 +6,7 @@ import { TokenEconomics } from "@/components/token-economics";
 import { Card, CardContent } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { TrendingUp, Users, Droplets, Coins, Award } from "lucide-react";
+import { Link } from "wouter";
 
 export default function Dashboard() {
   const { data: metrics, isLoading: metricsLoading } = useQuery({
@@ -44,14 +45,18 @@ export default function Dashboard() {
                 Secure, transparent, and incentivized blood donation system powered by smart contracts, NFT certificates, and AI-driven shortage prediction.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <button className="gradient-gold hover:opacity-90 px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 btn-glow">
-                  <Users className="w-5 h-5 mr-2 inline" />
-                  Register as Donor
-                </button>
-                <button className="bg-glass backdrop-blur-sm border border-white/20 hover:border-accent/50 px-8 py-4 rounded-lg font-semibold transition-all duration-300">
-                  <TrendingUp className="w-5 h-5 mr-2 inline" />
-                  Hospital Dashboard
-                </button>
+                <Link href="/donor-registration">
+                  <button className="gradient-gold hover:opacity-90 px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 btn-glow">
+                    <Users className="w-5 h-5 mr-2 inline" />
+                    Register as Donor
+                  </button>
+                </Link>
+                <Link href="/hospital-dashboard">
+                  <button className="bg-glass backdrop-blur-sm border border-white/20 hover:border-accent/50 px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                    <TrendingUp className="w-5 h-5 mr-2 inline" />
+                    Hospital Dashboard
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
