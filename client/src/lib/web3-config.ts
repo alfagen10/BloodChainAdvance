@@ -1,10 +1,10 @@
 import { ethers } from 'ethers';
 
-// Contract addresses (these would be set after deployment)
+// Contract addresses (deployed on Polygon Amoy Testnet)
 export const CONTRACT_ADDRESSES = {
   BLOOD_DONATION: import.meta.env.VITE_BLOOD_DONATION_CONTRACT || "0x742d35Cc6B5C4532845C5B5C4532845C5B5C7B2e",
-  BLOOD_TOKEN: import.meta.env.VITE_BLOOD_TOKEN_CONTRACT || "0x123d35Cc6B5C4532845C5B5C4532845C5B5C7B2e",
-  DONATION_NFT: import.meta.env.VITE_DONATION_NFT_CONTRACT || "0x456d35Cc6B5C4532845C5B5C4532845C5B5C7B2e",
+  BLOOD_TOKEN: import.meta.env.VITE_BLOOD_TOKEN_CONTRACT || "0x4B2e4CBe091E687729274D33dd8D7911e3d86d9C",
+  DONATION_NFT: import.meta.env.VITE_DONATION_NFT_CONTRACT || "0x58bb59c3aF6a504EAf6F78AbdDB8711F8a5bcfDe",
 } as const;
 
 // Polygon Amoy Testnet configuration

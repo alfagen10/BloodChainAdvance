@@ -6,47 +6,46 @@ async function main() {
   const [deployer] = await ethers.getSigners();
 
   console.log("Deploying contracts with the account:", deployer.address);
-  console.log("Account balance:", (await deployer.getBalance()).toString());
+  console.log("Account balance:", (await ethers.provider.getBalance(deployer.address)).toString());
 
   // Deploy BloodToken first
-  console.log("\n🩸 Deploying BloodToken...");
-  const BloodToken = await ethers.getContractFactory("BloodToken");
+  console.log("\n🩸 Deploying SimpleBloodToken...");
+  const BloodToken = await ethers.getContractFactory("SimpleBloodToken");
   const bloodToken = await BloodToken.deploy();
-  await bloodToken.deployed();
-  console.log("✅ BloodToken deployed to:", bloodToken.address);
+  await bloodToken.waitForDeployment();
+  const bloodTokenAddress = await bloodToken.getAddress();
+  console.log("✅ SimpleBloodToken deployed to:", bloodTokenAddress);
 
   // Deploy DonationNFT
-  console.log("\n🏆 Deploying DonationNFT...");
-  const DonationNFT = await ethers.getContractFactory("DonationNFT");
-  const donationNFT = await DonationNFT.deploy(
-    "BloodChain Donation Certificate",
-    "BLOODCERT",
-    "https://api.bloodchain.com/metadata/"
-  );
-  await donationNFT.deployed();
-  console.log("✅ DonationNFT deployed to:", donationNFT.address);
+  console.log("\n🏆 Deploying SimpleDonationNFT...");
+  const DonationNFT = await ethers.getContractFactory("SimpleDonationNFT");
+  const donationNFT = await DonationNFT.deploy();
+  await donationNFT.waitForDeployment();
+  const donationNFTAddress = await donationNFT.getAddress();
+  console.log("✅ SimpleDonationNFT deployed to:", donationNFTAddress);
 
   // Deploy BloodDonation main contract
-  console.log("\n🏥 Deploying BloodDonation...");
-  const BloodDonation = await ethers.getContractFactory("BloodDonation");
+  console.log("\n🏥 Deploying SimpleBloodDonation...");
+  const BloodDonation = await ethers.getContractFactory("SimpleBloodDonation");
   const bloodDonation = await BloodDonation.deploy(
-    bloodToken.address,
-    donationNFT.address
+    bloodTokenAddress,
+    donationNFTAddress
   );
-  await bloodDonation.deployed();
-  console.log("✅ BloodDonation deployed to:", bloodDonation.address);
+  await bloodDonation.waitForDeployment();
+  const bloodDonationAddress = await bloodDonation.getAddress();
+  console.log("✅ SimpleBloodDonation deployed to:", bloodDonationAddress);
 
   // Set up permissions
   console.log("\n⚙️  Setting up permissions...");
   
   // Add BloodDonation contract as authorized minter for BloodToken
   console.log("Adding BloodDonation as BloodToken minter...");
-  await bloodToken.addMinter(bloodDonation.address);
+  await bloodToken.addMinter(bloodDonationAddress);
   console.log("✅ BloodToken minter permission granted");
 
   // Add BloodDonation contract as authorized minter for DonationNFT
   console.log("Adding BloodDonation as DonationNFT minter...");
-  await donationNFT.addMinter(bloodDonation.address);
+  await donationNFT.addMinter(bloodDonationAddress);
   console.log("✅ DonationNFT minter permission granted");
 
   // Verify initial setup
@@ -55,14 +54,14 @@ async function main() {
   const tokenName = await bloodToken.name();
   const tokenSymbol = await bloodToken.symbol();
   const tokenSupply = await bloodToken.totalSupply();
-  console.log(`BloodToken: ${tokenName} (${tokenSymbol}) - Initial Supply: ${ethers.utils.formatEther(tokenSupply)}`);
+  console.log(`BloodToken: ${tokenName} (${tokenSymbol}) - Initial Supply: ${ethers.formatEther(tokenSupply)}`);
 
   const nftName = await donationNFT.name();
   const nftSymbol = await donationNFT.symbol();
   console.log(`DonationNFT: ${nftName} (${nftSymbol})`);
 
   const stats = await bloodDonation.getContractStats();
-  console.log(`BloodDonation Stats - Donors: ${stats[0]}, Donations: ${stats[1]}, Tokens Distributed: ${ethers.utils.formatEther(stats[2])}`);
+  console.log(`BloodDonation Stats - Donors: ${stats[0]}, Donations: ${stats[1]}, Tokens Distributed: ${ethers.formatEther(stats[2])}`);
 
   // Save deployment information
   const deploymentInfo = {
@@ -72,23 +71,23 @@ async function main() {
     timestamp: new Date().toISOString(),
     contracts: {
       BloodToken: {
-        address: bloodToken.address,
+        address: bloodTokenAddress,
         name: tokenName,
         symbol: tokenSymbol,
-        initialSupply: ethers.utils.formatEther(tokenSupply),
+        initialSupply: ethers.formatEther(tokenSupply),
       },
       DonationNFT: {
-        address: donationNFT.address,
+        address: donationNFTAddress,
         name: nftName,
         symbol: nftSymbol,
       },
       BloodDonation: {
-        address: bloodDonation.address,
+        address: bloodDonationAddress,
       },
     },
     verification: {
-      bloodTokenMinter: await bloodToken.authorizedMinters(bloodDonation.address),
-      nftMinter: await donationNFT.authorizedMinters(bloodDonation.address),
+      bloodTokenMinter: await bloodToken.authorizedMinters(bloodDonationAddress),
+      nftMinter: await donationNFT.authorizedMinters(bloodDonationAddress),
     },
   };
 
@@ -105,9 +104,9 @@ async function main() {
 
   // Generate environment variables for frontend
   const envVars = [
-    `VITE_BLOOD_DONATION_CONTRACT=${bloodDonation.address}`,
-    `VITE_BLOOD_TOKEN_CONTRACT=${bloodToken.address}`,
-    `VITE_DONATION_NFT_CONTRACT=${donationNFT.address}`,
+    `VITE_BLOOD_DONATION_CONTRACT=${bloodDonationAddress}`,
+    `VITE_BLOOD_TOKEN_CONTRACT=${bloodTokenAddress}`,
+    `VITE_DONATION_NFT_CONTRACT=${donationNFTAddress}`,
     `VITE_NETWORK_NAME=${hre.network.name}`,
     `VITE_CHAIN_ID=${(await ethers.provider.getNetwork()).chainId}`,
   ].join('\n');
@@ -118,16 +117,16 @@ async function main() {
 
   console.log("\n🎉 Deployment completed successfully!");
   console.log("\n📋 Contract Addresses:");
-  console.log("├── BloodToken:", bloodToken.address);
-  console.log("├── DonationNFT:", donationNFT.address);
-  console.log("└── BloodDonation:", bloodDonation.address);
+  console.log("├── BloodToken:", bloodTokenAddress);
+  console.log("├── DonationNFT:", donationNFTAddress);
+  console.log("└── BloodDonation:", bloodDonationAddress);
 
   // Instructions for verification on block explorer
   if (hre.network.name !== "hardhat" && hre.network.name !== "localhost") {
     console.log("\n🔍 To verify contracts on block explorer, run:");
-    console.log(`npx hardhat verify --network ${hre.network.name} ${bloodToken.address}`);
-    console.log(`npx hardhat verify --network ${hre.network.name} ${donationNFT.address} "BloodChain Donation Certificate" "BLOODCERT" "https://api.bloodchain.com/metadata/"`);
-    console.log(`npx hardhat verify --network ${hre.network.name} ${bloodDonation.address} ${bloodToken.address} ${donationNFT.address}`);
+    console.log(`npx hardhat verify --network ${hre.network.name} ${bloodTokenAddress}`);
+    console.log(`npx hardhat verify --network ${hre.network.name} ${donationNFTAddress}`);
+    console.log(`npx hardhat verify --network ${hre.network.name} ${bloodDonationAddress} ${bloodTokenAddress} ${donationNFTAddress}`);
   }
 
   // Demo operations (optional)

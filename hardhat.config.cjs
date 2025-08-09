@@ -1,12 +1,10 @@
 require("@nomicfoundation/hardhat-toolbox");
-require("@nomiclabs/hardhat-ethers");
-require("@openzeppelin/hardhat-upgrades");
 require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: {
-    version: "0.8.19",
+    version: "0.8.20",
     settings: {
       optimizer: {
         enabled: true,
@@ -23,7 +21,7 @@ module.exports = {
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       chainId: 80002,
       gas: 6000000,
-      gasPrice: 10000000000, // 10 gwei
+      gasPrice: 35000000000, // 35 gwei
     },
     polygon: {
       url: process.env.POLYGON_RPC_URL || "https://polygon-rpc.com/",
