@@ -214,6 +214,56 @@
   transform: translateY(0);
 }
 
+/* Fix text input visibility issues */
+input[type="text"], 
+input[type="number"], 
+input[type="email"], 
+input[type="tel"], 
+textarea, 
+select {
+  color: white !important;
+  background-color: rgba(30, 41, 59, 0.9) !important;
+}
+
+input[type="text"]:focus, 
+input[type="number"]:focus, 
+input[type="email"]:focus, 
+input[type="tel"]:focus, 
+textarea:focus, 
+select:focus {
+  color: white !important;
+  background-color: rgba(30, 41, 59, 0.95) !important;
+}
+
+/* Ensure placeholder text is visible */
+input::placeholder, 
+textarea::placeholder {
+  color: rgb(156, 163, 175) !important;
+  opacity: 1 !important;
+}
+
+/* Better contrast for form fields */
+.bg-secondary\/50 {
+  background-color: rgba(30, 41, 59, 0.9) !important;
+  color: white !important;
+}
+
+/* Enhanced input field styling */
+input.bg-secondary\/50, 
+textarea.bg-secondary\/50 {
+  background-color: rgba(30, 41, 59, 0.9) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+input.bg-secondary\/50:focus, 
+textarea.bg-secondary\/50:focus {
+  background-color: rgba(30, 41, 59, 0.95) !important;
+  color: white !important;
+  border-color: rgb(124, 58, 237) !important;
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2) !important;
+}
+
 /* Card hover effects */
 .card-hover {
   transition: all 0.3s ease;

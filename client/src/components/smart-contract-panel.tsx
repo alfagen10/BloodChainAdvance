@@ -172,7 +172,7 @@ export function SmartContractPanel() {
               
               <div className="flex items-center justify-between p-3 bg-secondary/30 rounded-lg border border-white/5">
                 <span className="text-sm text-muted-foreground">Network</span>
-                <span className="text-sm text-green-400">Polygon Mumbai</span>
+                <span className="text-sm text-green-400">Polygon Amoy</span>
               </div>
               
               <div className="flex items-center justify-between p-3 bg-secondary/30 rounded-lg border border-white/5">
@@ -185,7 +185,7 @@ export function SmartContractPanel() {
               
               <Button
                 variant="outline"
-                onClick={() => window.open('https://mumbai.polygonscan.com/', '_blank')}
+                onClick={() => window.open('https://www.oklink.com/amoy/', '_blank')}
                 className="w-full bg-glass border-white/20 hover:border-accent/50 transition-all duration-300"
               >
                 <ExternalLink className="w-4 h-4 mr-2" />

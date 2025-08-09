@@ -1,7 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { WalletConnection } from "@/components/wallet-connection";
-import { Box, Activity, Award, Code, BarChart3 } from "lucide-react";
+import { Box, Activity, Award, Code, BarChart3, Building2, Users } from "lucide-react";
 
 export function Navigation() {
   const [location] = useLocation();
@@ -11,6 +11,8 @@ export function Navigation() {
     { path: "/analytics", label: "Analytics", icon: Activity },
     { path: "/nft-certificates", label: "NFT Certificates", icon: Award },
     { path: "/smart-contracts", label: "Smart Contracts", icon: Code },
+    { path: "/donor-registration", label: "Register Donor", icon: Users },
+    { path: "/hospital-dashboard", label: "Hospital", icon: Building2 },
   ];
 
   return (
