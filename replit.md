@@ -4,7 +4,19 @@
 
 BloodChain is a comprehensive blockchain-powered blood donation platform that revolutionizes the blood donation ecosystem through smart contracts, NFT certificates, and AI-driven analytics. The platform combines a modern React frontend with an Express.js backend, utilizing PostgreSQL for data persistence and Ethereum-compatible smart contracts for transparent, incentivized donations.
 
-The system provides secure donor registration, donation tracking, tokenized rewards, NFT certificates for donations, real-time analytics, and blood supply management. It features Web3 integration with MetaMask wallet support and multi-network compatibility (Polygon Mumbai, Polygon Mainnet, Sepolia).
+The system provides secure donor registration, donation tracking, tokenized rewards, NFT certificates for donations, real-time analytics, and blood supply management. It features Web3 integration with MetaMask wallet support and is deployed on Polygon Amoy testnet with competition-grade UI effects.
+
+## Recent Changes (January 2025)
+
+✓ Successfully migrated from deprecated Polygon Mumbai to Polygon Amoy testnet
+✓ Fixed all navigation issues - Register as Donor and Hospital Dashboard buttons working perfectly
+✓ Resolved text input visibility problems with enhanced contrast and proper white text color
+✓ Created professional donor registration page with form validation and wallet integration
+✓ Built comprehensive hospital dashboard with blood inventory management and urgent requests
+✓ Added competition-winning UI effects: glass morphism, animated card hovers, glow effects
+✓ Optimized page spacing and layout for better user experience
+✓ Fixed Select component errors and improved form field styling
+✓ Updated all blockchain references to use Polygon Amoy network and block explorer
 
 ## User Preferences
 
