@@ -53,7 +53,7 @@ export function Navigation() {
           {/* Network Status */}
           <div className="hidden lg:flex items-center space-x-2 bg-glass backdrop-blur-sm px-3 py-2 rounded-lg border border-white/10">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-sm">Polygon Mumbai</span>
+            <span className="text-sm">Polygon Amoy</span>
           </div>
           
           <WalletConnection />

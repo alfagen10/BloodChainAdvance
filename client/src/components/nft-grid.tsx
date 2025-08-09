@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
-import { useWeb3 } from "@/hooks/use-web3";
+import { useWeb3 } from "@/context/web3-context";
 import { Award, ExternalLink, Plus } from "lucide-react";
 
 export function NFTGrid() {

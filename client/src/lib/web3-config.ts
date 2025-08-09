@@ -7,12 +7,12 @@ export const CONTRACT_ADDRESSES = {
   DONATION_NFT: import.meta.env.VITE_DONATION_NFT_CONTRACT || "0x456d35Cc6B5C4532845C5B5C4532845C5B5C7B2e",
 } as const;
 
-// Polygon Mumbai Testnet configuration
-export const MUMBAI_CONFIG = {
-  chainId: 80001,
-  name: 'Polygon Mumbai Testnet',
-  rpcUrl: 'https://rpc-mumbai.maticvigil.com/',
-  blockExplorer: 'https://mumbai.polygonscan.com/',
+// Polygon Amoy Testnet configuration
+export const AMOY_CONFIG = {
+  chainId: 80002,
+  name: 'Polygon Amoy Testnet',
+  rpcUrl: 'https://rpc-amoy.polygon.technology/',
+  blockExplorer: 'https://www.oklink.com/amoy/',
   nativeCurrency: {
     name: 'MATIC',
     symbol: 'MATIC',
@@ -147,9 +147,9 @@ export function shortenAddress(address: string): string {
 }
 
 export function getBlockExplorerUrl(txHash: string): string {
-  return `${MUMBAI_CONFIG.blockExplorer}/tx/${txHash}`;
+  return `${AMOY_CONFIG.blockExplorer}/tx/${txHash}`;
 }
 
 export function getAddressExplorerUrl(address: string): string {
-  return `${MUMBAI_CONFIG.blockExplorer}/address/${address}`;
+  return `${AMOY_CONFIG.blockExplorer}/address/${address}`;
 }

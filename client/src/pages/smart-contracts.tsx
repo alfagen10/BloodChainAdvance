@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useQuery } from "@tanstack/react-query";
-import { useWeb3 } from "@/hooks/use-web3";
+import { useWeb3 } from "@/context/web3-context";
 import { useSmartContracts } from "@/hooks/use-smart-contracts";
 import { useState } from "react";
 import { 

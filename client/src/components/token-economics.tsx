@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
-import { useWeb3 } from "@/hooks/use-web3";
+import { useWeb3 } from "@/context/web3-context";
 import { useSmartContracts } from "@/hooks/use-smart-contracts";
 import { Coins, Lock, ArrowUpDown, TrendingUp } from "lucide-react";
 import { formatTokenAmount } from "@/lib/blockchain-utils";

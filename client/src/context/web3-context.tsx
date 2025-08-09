@@ -24,7 +24,7 @@ export function useWeb3() {
   return context;
 }
 
-const POLYGON_MUMBAI_CHAIN_ID = 80001;
+const POLYGON_AMOY_CHAIN_ID = 80002;
 const POLYGON_MAINNET_CHAIN_ID = 137;
 
 export function Web3Provider({ children }: { children: React.ReactNode }) {
@@ -62,9 +62,9 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
       setAccount(accounts[0]);
       setChainId(Number(network.chainId));
 
-      // Try to switch to Polygon Mumbai if not already there
-      if (Number(network.chainId) !== POLYGON_MUMBAI_CHAIN_ID) {
-        await switchNetwork(POLYGON_MUMBAI_CHAIN_ID);
+      // Try to switch to Polygon Amoy if not already there
+      if (Number(network.chainId) !== POLYGON_AMOY_CHAIN_ID) {
+        await switchNetwork(POLYGON_AMOY_CHAIN_ID);
       }
 
     } catch (error: any) {
@@ -100,17 +100,17 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
         try {
           let networkConfig;
           
-          if (targetChainId === POLYGON_MUMBAI_CHAIN_ID) {
+          if (targetChainId === POLYGON_AMOY_CHAIN_ID) {
             networkConfig = {
-              chainId: `0x${POLYGON_MUMBAI_CHAIN_ID.toString(16)}`,
-              chainName: 'Polygon Mumbai Testnet',
+              chainId: `0x${POLYGON_AMOY_CHAIN_ID.toString(16)}`,
+              chainName: 'Polygon Amoy Testnet',
               nativeCurrency: {
                 name: 'MATIC',
                 symbol: 'MATIC',
                 decimals: 18,
               },
-              rpcUrls: ['https://rpc-mumbai.maticvigil.com/'],
-              blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+              rpcUrls: ['https://rpc-amoy.polygon.technology/'],
+              blockExplorerUrls: ['https://www.oklink.com/amoy/'],
             };
           } else if (targetChainId === POLYGON_MAINNET_CHAIN_ID) {
             networkConfig = {

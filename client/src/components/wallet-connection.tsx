@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { useWeb3 } from "@/hooks/use-web3";
+import { useWeb3 } from "@/context/web3-context";
 import { Wallet, ChevronDown, Copy, ExternalLink, AlertCircle } from "lucide-react";
 import { formatAddress } from "@/lib/blockchain-utils";
 import { useToast } from "@/hooks/use-toast";
@@ -32,7 +32,7 @@ export function WalletConnection() {
 
   const openExplorer = () => {
     if (account) {
-      window.open(`https://mumbai.polygonscan.com/address/${account}`, '_blank');
+      window.open(`https://www.oklink.com/amoy/address/${account}`, '_blank');
     }
   };
 
