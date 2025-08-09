@@ -72,9 +72,9 @@ export default function HospitalDashboard() {
       <Navigation />
       
       {/* Header */}
-      <section className="px-6 py-8">
+      <section className="px-6 py-4">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 bg-gradient-accent rounded-lg flex items-center justify-center animate-glow">
                 <Building2 className="w-6 h-6 text-white" />
@@ -97,7 +97,7 @@ export default function HospitalDashboard() {
           </div>
 
           {/* Key Metrics */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
             <Card className="bg-glass backdrop-blur-md border-white/10 card-hover">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
@@ -151,7 +151,7 @@ export default function HospitalDashboard() {
             </Card>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
             {/* Blood Inventory */}
             <div className="lg:col-span-2">
@@ -207,7 +207,7 @@ export default function HospitalDashboard() {
                           <SelectValue placeholder="Filter" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="">All Types</SelectItem>
+                          <SelectItem value="all">All Types</SelectItem>
                           {BLOOD_TYPES.map((type) => (
                             <SelectItem key={type} value={type}>{type}</SelectItem>
                           ))}

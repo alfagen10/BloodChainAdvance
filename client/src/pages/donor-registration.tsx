@@ -93,8 +93,8 @@ export default function DonorRegistration() {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative px-6 py-12">
-        <div className="max-w-4xl mx-auto text-center mb-12">
+      <section className="relative px-6 py-6">
+        <div className="max-w-4xl mx-auto text-center mb-8">
           <div className="inline-flex items-center space-x-2 bg-accent/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
             <Users className="w-5 h-5 text-accent" />
             <span className="text-accent font-semibold">Join the Revolution</span>
@@ -109,7 +109,7 @@ export default function DonorRegistration() {
         </div>
 
         {/* Benefits Grid */}
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           {benefits.map((benefit, index) => (
             <Card key={index} className="bg-glass backdrop-blur-md border-white/10 card-hover">
               <CardContent className="p-6 text-center">

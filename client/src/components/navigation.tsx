@@ -11,8 +11,6 @@ export function Navigation() {
     { path: "/analytics", label: "Analytics", icon: Activity },
     { path: "/nft-certificates", label: "NFT Certificates", icon: Award },
     { path: "/smart-contracts", label: "Smart Contracts", icon: Code },
-    { path: "/donor-registration", label: "Register Donor", icon: Users },
-    { path: "/hospital-dashboard", label: "Hospital", icon: Building2 },
   ];
 
   return (
