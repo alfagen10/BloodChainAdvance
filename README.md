@@ -1,92 +1,82 @@
-# BloodChainAdvance 🩸
+````markdown
+# 🩸 BloodChainAdvance
 
-**Decentralized Blood Donation Management System**
-*Blockchain-powered platform for transparent, secure, and traceable blood donation tracking.*
+A decentralized blood donation platform built on blockchain technology. BloodChainAdvance uses smart contracts to securely manage blood donations and connects donors, recipients, and hospitals with transparency and trust.
 
----
+## 🚀 Live Demo
 
-## 📌 Overview
+[Check it out on Replit](https://replit.com/@alfarukmd78/BloodChainAdvance)
 
-BloodChainAdvance is a **Web3-integrated blood donation platform** that ensures **full transparency, immutability, and trust** in the blood supply chain.
-It leverages **smart contracts** to log all donor and recipient transactions **on-chain**, making the system **tamper-proof** and **auditable**.
+## 🛠️ Technologies Used
 
-Designed for **APU BCC DevMatch 2025 — BGA Track**, the project focuses on **secure data handling**, **fraud prevention**, and **real-time donation tracking** without relying on centralized storage.
-
----
+- **TypeScript** (71.2%) — Frontend and business logic  
+- **HTML** (23.8%) — User interface markup  
+- **JavaScript** (1.8%) — Supporting scripts and utilities  
+- **Solidity** (1.7%) — Smart contracts for donation management  
+- **CSS** (1.5%) — Styling and layout  
 
 ## ✨ Features
 
-* **Blockchain Integration (Web3 + Smart Contracts)** for immutable donation logs
-* **Donor & Recipient Matching** based on medical requirements and blood type
-* **Transaction Transparency** — all donation events recorded on-chain
-* **Security & Privacy** — donor data encryption with verified blockchain entries
-* **Cross-Chain Bridge Ready** — future scalability to multiple blockchain networks
-* **User-Friendly Interface** (can run fully online or offline for accessibility)
+- 🔗 Blockchain-powered blood donation tracking  
+- 🤖 Smart contracts to automate and verify donations  
+- 📱 Responsive and user-friendly interface  
+- 🧪 Integration with Ethereum testnet/local node for development  
 
----
+## 🏁 Getting Started
 
-## 🛠️ Tech Stack
+### 🔧 Prerequisites
 
-* **Frontend**: HTML, CSS, JavaScript (integrated into same codebase)
-* **Backend**: Node.js + Express
-* **Blockchain**: Ethereum / EVM-compatible smart contracts (Solidity)
-* **Storage**: On-chain fields with optional local backup
-* **Deployment**: Replit (current), easily portable to GitHub Pages / Vercel
+- Node.js (v16+) and npm  
+- Hardhat or similar Ethereum development environment  
+- Python 3.x with the following packages:
 
----
+  ```bash
+  pip install pandas numpy matplotlib
+````
 
-## 🚀 Installation & Setup
+### 📥 Installation
 
-1. **Clone the Repository**
+Clone the repository and install dependencies:
 
-   ```bash
-   git clone https://github.com/your-username/BloodChainAdvance.git
-   cd BloodChainAdvance
-   ```
+```bash
+git clone https://github.com/alfarukmd78/BloodChainAdvance.git
+cd BloodChainAdvance
+npm install
+pip install -r requirements.txt
+```
 
-2. **Install Dependencies**
+### ▶️ Running the Project
 
-   ```bash
-   npm install
-   ```
+1. Start your local Ethereum node:
 
-3. **Configure Environment**
+```bash
+npx hardhat node
+```
 
-   * Add your Web3 provider (e.g., Infura, Alchemy) in `.env`
-   * Set blockchain network details
+2. Deploy smart contracts:
 
-4. **Run Locally**
+```bash
+npx hardhat run scripts/deploy.js --network localhost
+```
 
-   ```bash
-   npm start
-   ```
+3. Run the frontend/backend servers:
 
----
+```bash
+npm run dev
+```
 
-## 📜 Smart Contract
+*(Adjust commands if your setup differs)*
 
-The project includes a **Solidity smart contract** for:
+## 💡 Usage
 
-* Storing donation records
-* Validating donor/recipient IDs
-* Verifying transaction authenticity
-* Preventing data manipulation
+Once the local blockchain and contracts are deployed, open your browser to the frontend URL (e.g., `http://localhost:3000`) to interact with the platform. Connect your Ethereum wallet to manage donations securely.
 
----
+## 🤝 Contributing
 
-## 🎯 Future Scope
-
-* Multi-chain deployment for higher interoperability
-* NFT-based donor recognition badges
-* Integration with hospital and blood bank APIs
-* Mobile app version with wallet connection
-
----
+Contributions are welcome! Please fork the repo, open issues for bugs or feature requests, and submit pull requests for review.
 
 ## 📄 License
 
-This project is licensed under the **MIT License** — free for modification and distribution.
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
 ---
-Do you want me to make that version next?
-
