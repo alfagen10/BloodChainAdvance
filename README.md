@@ -33,6 +33,7 @@ A decentralized blood donation platform built on blockchain technology. BloodCha
   pip install pandas numpy matplotlib
 ````
 
+---
 ### 📥 Installation
 
 Clone the repository and install dependencies:
