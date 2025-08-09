@@ -1,4 +1,3 @@
-````markdown
 # 🩸 BloodChainAdvance
 
 A decentralized blood donation platform built on blockchain technology. BloodChainAdvance uses smart contracts to securely manage blood donations and connects donors, recipients, and hospitals with transparency and trust.
